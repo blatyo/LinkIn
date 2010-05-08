@@ -57,3 +57,13 @@
     <% end %>
   </div>
 </div>
+<div id="secondary_content">
+  <div id="friends">
+    <% @user.friends.each do |friend| %>
+      <div class="friend">
+        <%= h friend.login %>
+        <%= remove_friend_link(friend, current_user) %>
+      </div>
+    <% end %>
+  </div>
+</div>

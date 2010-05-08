@@ -9,7 +9,7 @@ class Friendship < ActiveRecord::Base
   end
 
   def self.accept?(user, friend)
-    find_pair(user, friend).inject(true) do |friendship, accepted|
+    find_pair(user, friend).inject(true) do |accepted, friendship|
       accepted && friendship.update_attributes(:status => "accepted")
     end
   end
