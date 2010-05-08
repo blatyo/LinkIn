@@ -2,7 +2,10 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :user_session
   map.resource :account, :controller => "users"
   map.resources :users do |user|
-    user.resources :friends
+    user.resources :friendships, :except => [:show, :edit, :index, :new]
+    user.resources :chats, :only => [:create], :shallow => true do |chat|
+      chat.resources :comments, :only => [:create] 
+    end
   end
 
   map.root :controller => "user_sessions", :action => "new"

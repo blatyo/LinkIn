@@ -1,37 +1,59 @@
-<p>
-  <b>Login:</b>
-  <%=h @user.login %>
-</p>
-
-<p>
-  <b>Login count:</b>
-  <%=h @user.login_count %>
-</p>
-
-<p>
-  <b>Last request at:</b>
-  <%=h @user.last_request_at %>
-</p>
-
-<p>
-  <b>Last login at:</b>
-  <%=h @user.last_login_at %>
-</p>
-
-<p>
-  <b>Current login at:</b>
-  <%=h @user.current_login_at %>
-</p>
-
-<p>
-  <b>Last login ip:</b>
-  <%=h @user.last_login_ip %>
-</p>
-
-<p>
-  <b>Current login ip:</b>
-  <%=h @user.current_login_ip %>
-</p>
-
-
-<%= link_to 'Edit', edit_account_path %>
+<div id="main_content">
+  <div id="about">
+    <%=h @user.login %>
+    <p>
+        <b>Last login at:</b>
+        <%=h @user.last_login_at %>
+    </p>
+    <%= link_to 'Edit', edit_account_path if @user == current_user %>
+    <%= add_friend_link(@user, current_user) %>
+    <%= remove_friend_link(@user, current_user) %>
+    <%= confirm_friendship_link(@user, current_user) %>
+    <%= reject_friendship_link(@user, current_user) %>
+    <%= cancel_friendship_link(@user, current_user) %>
+  </div>
+  <div id="friend_requests">
+    <% current_user.pending_friends.each do |friend| %>
+      <div class="friend_request">
+        <%= h friend.login %>
+        <%= confirm_friendship_link(friend, current_user) %>
+        <%= reject_friendship_link(friend, current_user) %>
+      </div>
+    <% end if @user == current_user %>
+  </div>
+  <div id="chats">
+    <% if @user == current_user %>
+      <div id="new_chat">
+        <% form_for([current_user, Chat.new]) do |f| %>
+          <%= f.text_field :message %>
+          <%= f.submit "Conversate" %>
+        <% end %>
+      </div>
+    <% end %>
+    <% @user.chats.each do |chat| %>
+      <div class="chat">
+        <div class="message">
+          <%= h chat.message %>
+        </div>
+        <div class="comments">
+          <% chat.comments.each do |comment| %>
+            <div class="comment">
+              <div class="message">
+                <%= h comment.message %>
+              </div>
+              <div class="author">
+                <%= h comment.user.login %>
+              </div>
+            </div>
+          <% end %>
+          <div class="new_comment">
+            <% form_for([chat, Comment.new]) do |f| %>
+              <%= f.text_field :message %>
+              <%= f.submit "Commentate" %>  
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

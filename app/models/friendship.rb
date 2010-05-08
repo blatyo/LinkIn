@@ -9,13 +9,19 @@ class Friendship < ActiveRecord::Base
   end
 
   def self.accept?(user, friend)
-    friendship1 = Friendship.find_by_user_id_and_friend_id(user.id, friend.id)
-    friendship2 = Friendship.find_by_user_id_and_friend_id(friend.id, user.id)
-    friendship1.update_attributes(:status => "accepted") && friendship2.update_attributes(:status => "accepted")
+    find_pair(user, friend).inject(true) do |friendship, accepted|
+      accepted && friendship.update_attributes(:status => "accepted")
+    end
   end
 
   def self.remove(user, friend)
-    Friendship.find_by_user_id_and_friend_id(user.id, friend.id).destroy
-    Friendship.find_by_user_id_and_friend_id(friend.id, user.id).destroy
+    find_pair(user, friend).each(&:destroy)
+  end
+
+  private
+
+  def self.find_pair(user, friend)
+    [Friendship.find_by_user_id_and_friend_id(user.id, friend.id),
+     Friendship.find_by_user_id_and_friend_id(friend.id, user.id)]
   end
 end
