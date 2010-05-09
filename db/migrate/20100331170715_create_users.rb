@@ -1,4 +1,6 @@
 class CreateUsers < ActiveRecord::Migration
+  # db_magic :connection => [:slave1, :slave2]
+
   def self.up
     create_table :users do |t|
       t.string    :login,               :null => false                # optional, you can use email instead, or both

@@ -6629,3 +6629,615 @@ Rendering users/show
   [4;35;1mUser Load (5.4ms)[0m   [0mSELECT `users`.* FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 3) AND ((status = 'accepted'))) [0m
   [4;36;1mUser Load (1.0ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 3) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
 Completed in 457ms (View: 239, DB: 36) | 200 OK [http://localhost/account]
+  [4;36;1mSQL (1.8ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (13.6ms)[0m   [0mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (11.7ms)[0m   [0;1mCREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`)[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (1.6ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+Migrating to CreateUsers (20100331170715)
+  [4;35;1mSQL (7.4ms)[0m   [0mCREATE TABLE `users` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `login` varchar(255) NOT NULL, `email` varchar(255) NOT NULL, `crypted_password` varchar(255) NOT NULL, `password_salt` varchar(255) NOT NULL, `persistence_token` varchar(255) NOT NULL, `single_access_token` varchar(255) NOT NULL, `perishable_token` varchar(255) NOT NULL, `login_count` int(11) DEFAULT 0 NOT NULL, `failed_login_count` int(11) DEFAULT 0 NOT NULL, `last_request_at` datetime, `current_login_at` datetime, `last_login_at` datetime, `current_login_ip` varchar(255), `last_login_ip` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (3.5ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100331170715')[0m
+Migrating to CreateFriendships (20100331204918)
+  [4;35;1mSQL (15.9ms)[0m   [0mCREATE TABLE `friendships` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11), `friend_id` int(11), `status` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100331204918')[0m
+Migrating to CreateChats (20100507192205)
+  [4;35;1mSQL (6.2ms)[0m   [0mCREATE TABLE `chats` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `message` text, `user_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507192205')[0m
+Migrating to CreateComments (20100507192416)
+  [4;35;1mSQL (46.1ms)[0m   [0mCREATE TABLE `comments` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `message` text, `user_id` int(11), `chat_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (2.6ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20100507192416')[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (2.4ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (2.4ms)[0m   [0;1mSHOW FIELDS FROM `chats`[0m
+  [4;35;1mSQL (2.2ms)[0m   [0mdescribe `chats`[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSHOW KEYS FROM `chats`[0m
+  [4;35;1mSQL (2.6ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mdescribe `comments`[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSHOW KEYS FROM `comments`[0m
+  [4;36;1mSQL (2.3ms)[0m   [0;1mSHOW FIELDS FROM `friendships`[0m
+  [4;35;1mSQL (2.0ms)[0m   [0mdescribe `friendships`[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mSHOW KEYS FROM `friendships`[0m
+  [4;35;1mSQL (4.7ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mSQL (3.8ms)[0m   [0;1mdescribe `users`[0m
+  [4;35;1mSQL (1.2ms)[0m   [0mSHOW KEYS FROM `users`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2010-05-09 11:58:50) [GET]
+  Parameters: {"controller"=>"users", "action"=>"show"}
+
+ArgumentError (Invalid connection name (does not exist in database.yml): development/slave1):
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/active_record_extensions.rb:10:in `establish_real_connection_if_exists'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/connection_factory.rb:45:in `generate_abstract_class'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/connection_factory.rb:29:in `establish_connection'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/connection_factory.rb:18:in `connect'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/connection_switch.rb:8:in `coerce_to_connection_proxy'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/db_magic.rb:67:in `block in setup_slaves_magic'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/db_magic.rb:66:in `collect'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/db_magic.rb:66:in `setup_slaves_magic'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/db_magic.rb:17:in `db_magic'
+  app/models/user.rb:2:in `<class:User>'
+  app/models/user.rb:1:in `<top (required)>'
+  authlogic (2.1.3) lib/authlogic/session/klass.rb:33:in `klass'
+  authlogic (2.1.3) lib/authlogic/session/password.rb:90:in `login_field'
+  authlogic (2.1.3) lib/authlogic/session/password.rb:213:in `login_field'
+  authlogic (2.1.3) lib/authlogic/session/password.rb:118:in `initialize'
+  authlogic (2.1.3) lib/authlogic/session/activation.rb:48:in `initialize'
+  authlogic (2.1.3) lib/authlogic/session/klass.rb:64:in `initialize'
+  authlogic (2.1.3) lib/authlogic/session/scopes.rb:79:in `initialize'
+  authlogic (2.1.3) lib/authlogic/session/persistence.rb:37:in `new'
+  authlogic (2.1.3) lib/authlogic/session/persistence.rb:37:in `find'
+  app/controllers/application_controller.rb:15:in `current_user_session'
+  app/controllers/application_controller.rb:20:in `current_user'
+  app/controllers/application_controller.rb:24:in `require_user'
+  <internal:prelude>:8:in `synchronize'
+  /home/blatyo/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+  /home/blatyo/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+  /home/blatyo/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+Rendered rescues/_trace (237.4ms)
+Rendered rescues/_request_and_response (1.4ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (1.4ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2010-05-09 12:08:09) [GET]
+  Parameters: {"controller"=>"users", "action"=>"show"}
+
+ArgumentError (Invalid connection name (does not exist in database.yml): development/slave1):
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/active_record_extensions.rb:10:in `establish_real_connection_if_exists'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/connection_factory.rb:45:in `generate_abstract_class'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/connection_factory.rb:29:in `establish_connection'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/connection_factory.rb:18:in `connect'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/connection_switch.rb:8:in `coerce_to_connection_proxy'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/db_magic.rb:67:in `block in setup_slaves_magic'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/db_magic.rb:66:in `collect'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/db_magic.rb:66:in `setup_slaves_magic'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/db_magic.rb:17:in `db_magic'
+  app/models/user.rb:2:in `<class:User>'
+  app/models/user.rb:1:in `<top (required)>'
+  authlogic (2.1.3) lib/authlogic/session/klass.rb:33:in `klass'
+  authlogic (2.1.3) lib/authlogic/session/password.rb:90:in `login_field'
+  authlogic (2.1.3) lib/authlogic/session/password.rb:213:in `login_field'
+  authlogic (2.1.3) lib/authlogic/session/password.rb:118:in `initialize'
+  authlogic (2.1.3) lib/authlogic/session/activation.rb:48:in `initialize'
+  authlogic (2.1.3) lib/authlogic/session/klass.rb:64:in `initialize'
+  authlogic (2.1.3) lib/authlogic/session/scopes.rb:79:in `initialize'
+  authlogic (2.1.3) lib/authlogic/session/persistence.rb:37:in `new'
+  authlogic (2.1.3) lib/authlogic/session/persistence.rb:37:in `find'
+  app/controllers/application_controller.rb:15:in `current_user_session'
+  app/controllers/application_controller.rb:20:in `current_user'
+  app/controllers/application_controller.rb:24:in `require_user'
+  <internal:prelude>:8:in `synchronize'
+  /home/blatyo/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+  /home/blatyo/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+  /home/blatyo/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+Rendered rescues/_trace (122.3ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (3.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2010-05-09 12:09:48) [GET]
+  Parameters: {"controller"=>"users", "action"=>"show"}
+  [4;36;1mUser Columns (4.3ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Redirected to http://localhost:3000/user_session/new
+Filter chain halted as [:require_user] rendered_or_redirected.
+Completed in 188ms (DB: 8) | 302 Found [http://localhost/account]
+  [4;35;1mSQL (0.4ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (1.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UserSessionsController#new (for 127.0.0.1 at 2010-05-09 12:09:49) [GET]
+  Parameters: {"controller"=>"user_sessions", "action"=>"new"}
+  [4;35;1mUser Columns (3.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering user_sessions/new
+Completed in 360ms (View: 215, DB: 5) | 200 OK [http://localhost/user_session/new]
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#new (for 127.0.0.1 at 2010-05-09 12:10:07) [GET]
+  Parameters: {"controller"=>"users", "action"=>"new"}
+  [4;36;1mUser Columns (4.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering users/new
+Rendered users/_form (9.9ms)
+Completed in 328ms (View: 198, DB: 5) | 200 OK [http://localhost/account/new]
+  [4;35;1mSQL (2.6ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#create (for 127.0.0.1 at 2010-05-09 12:10:23) [POST]
+  Parameters: {"authenticity_token"=>"fm7ifLTSRtu3swOwuhCnHfrDuoTVgWc4K26bUVEOe8w=", "user"=>{"login"=>"blatyo", "email"=>"blatyo@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Register", "controller"=>"users", "action"=>"create"}
+  [4;35;1mUser Columns (4.8ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mSQL (5.0ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Load (2.3ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`email`) = BINARY 'blatyo@gmail.com') LIMIT 1[0m
+  [4;36;1mUser Load (5.5ms)[0m   [0;1mSELECT `users`.id FROM `users` WHERE (LOWER(`users`.`login`) = BINARY 'blatyo') LIMIT 1[0m
+  [4;35;1mUser Load (1.1ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (`users`.`persistence_token` = BINARY '997700eb813a4dbd217e8ebf94b916db3fc0ac45fcc5c54873cd3b049a49aef1c14d3fa38a75f6ad0f979004f7ea4e4f0468fa841ca0b7f007cdc2f497dee643') LIMIT 1[0m
+  [4;36;1mUser Load (1.0ms)[0m   [0;1mSELECT `users`.id FROM `users` WHERE (`users`.`single_access_token` = BINARY 'r9zWVQVqdtEC1Ij5BuXy') LIMIT 1[0m
+  [4;35;1mUser Create (2.5ms)[0m   [0mINSERT INTO `users` (`login`, `email`, `crypted_password`, `password_salt`, `persistence_token`, `single_access_token`, `perishable_token`, `login_count`, `failed_login_count`, `last_request_at`, `current_login_at`, `last_login_at`, `current_login_ip`, `last_login_ip`, `created_at`, `updated_at`) VALUES('blatyo', 'blatyo@gmail.com', '059689b817466bd28d12a831881336ae881c2f9d2fbd1367decb6b69d572bc355f46666cdb9e21b80c7e371de357876c1d741b245811097213ce708e30b7c210', 'E5kC6ykdaCX_kNBDQr9I', '997700eb813a4dbd217e8ebf94b916db3fc0ac45fcc5c54873cd3b049a49aef1c14d3fa38a75f6ad0f979004f7ea4e4f0468fa841ca0b7f007cdc2f497dee643', 'r9zWVQVqdtEC1Ij5BuXy', 'n4nyakHnz3rIpgY4P59C', 1, 0, '2010-05-09 16:10:24', '2010-05-09 16:10:23', NULL, '127.0.0.1', NULL, '2010-05-09 16:10:24', '2010-05-09 16:10:24')[0m
+  [4;36;1mSQL (2.7ms)[0m   [0;1mCOMMIT[0m
+Redirected to http://localhost:3000/account
+Completed in 814ms (DB: 28) | 302 Found [http://localhost/account]
+  [4;35;1mSQL (0.7ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2010-05-09 12:10:24) [GET]
+  Parameters: {"controller"=>"users", "action"=>"show"}
+  [4;35;1mUser Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+
+RuntimeError (Unsupported connection type: DbCharmer::ConnectionProxy):
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/connection_switch.rb:25:in `coerce_to_connection_proxy'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/connection_switch.rb:29:in `switch_connection_to'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/multi_db_proxy.rb:35:in `on_db'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/multi_db_proxy.rb:55:in `on_slave'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/finder_overrides.rb:40:in `first_level_on_slave'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/finder_overrides.rb:10:in `find_by_sql'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/finder_overrides.rb:32:in `find'
+  authlogic (2.1.3) lib/authlogic/session/scopes.rb:95:in `block in search_for_record'
+  authlogic (2.1.3) lib/authlogic/session/scopes.rb:94:in `search_for_record'
+  authlogic (2.1.3) lib/authlogic/session/cookies.rb:108:in `persist_by_cookie'
+  authlogic (2.1.3) lib/authlogic/session/callbacks.rb:79:in `persist'
+  authlogic (2.1.3) lib/authlogic/session/persistence.rb:55:in `persisting?'
+  authlogic (2.1.3) lib/authlogic/session/persistence.rb:39:in `find'
+  app/controllers/application_controller.rb:15:in `current_user_session'
+  app/controllers/application_controller.rb:20:in `current_user'
+  app/controllers/application_controller.rb:24:in `require_user'
+  <internal:prelude>:8:in `synchronize'
+  /home/blatyo/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+  /home/blatyo/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+  /home/blatyo/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+Rendered rescues/_trace (148.8ms)
+Rendered rescues/_request_and_response (1.3ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (1.8ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (1.9ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2010-05-09 12:35:01) [GET]
+  Parameters: {"controller"=>"users", "action"=>"show"}
+  [4;36;1mUser Columns (4.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+
+RuntimeError (Unsupported connection type: DbCharmer::ConnectionProxy):
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/connection_switch.rb:25:in `coerce_to_connection_proxy'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/connection_switch.rb:29:in `switch_connection_to'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/multi_db_proxy.rb:35:in `on_db'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/multi_db_proxy.rb:55:in `on_slave'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/finder_overrides.rb:40:in `first_level_on_slave'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/finder_overrides.rb:10:in `find_by_sql'
+  /home/blatyo/.rvm/gems/ruby-1.9.1-p378/gems/db-charmer-1.6.11/lib/db_charmer/finder_overrides.rb:32:in `find'
+  authlogic (2.1.3) lib/authlogic/session/scopes.rb:95:in `block in search_for_record'
+  authlogic (2.1.3) lib/authlogic/session/scopes.rb:94:in `search_for_record'
+  authlogic (2.1.3) lib/authlogic/session/cookies.rb:108:in `persist_by_cookie'
+  authlogic (2.1.3) lib/authlogic/session/callbacks.rb:79:in `persist'
+  authlogic (2.1.3) lib/authlogic/session/persistence.rb:55:in `persisting?'
+  authlogic (2.1.3) lib/authlogic/session/persistence.rb:39:in `find'
+  app/controllers/application_controller.rb:15:in `current_user_session'
+  app/controllers/application_controller.rb:20:in `current_user'
+  app/controllers/application_controller.rb:24:in `require_user'
+  <internal:prelude>:8:in `synchronize'
+  /home/blatyo/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/webrick/httpserver.rb:111:in `service'
+  /home/blatyo/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/webrick/httpserver.rb:70:in `run'
+  /home/blatyo/.rvm/rubies/ruby-1.9.1-p378/lib/ruby/1.9.1/webrick/server.rb:183:in `block in start_thread'
+
+Rendered rescues/_trace (1159.9ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (3.3ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2010-05-09 12:41:14) [GET]
+  Parameters: {"controller"=>"users", "action"=>"show"}
+  [4;36;1mUser Columns (5.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (0.7ms)[0m   [0mSET NAMES 'utf8'[0m
+  [0;34;1m[slave1] [0m  [4;36;1mSQL (0.6ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (1.5ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`persistence_token` = '997700eb813a4dbd217e8ebf94b916db3fc0ac45fcc5c54873cd3b049a49aef1c14d3fa38a75f6ad0f979004f7ea4e4f0468fa841ca0b7f007cdc2f497dee643') LIMIT 1[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Update (1.9ms)[0m   [0mUPDATE `users` SET `last_request_at` = '2010-05-09 16:41:15', `perishable_token` = 'XZ_9GYCXlAD6mToKAzcN', `updated_at` = '2010-05-09 16:41:15' WHERE `id` = 1[0m
+  [4;36;1mSQL (4.4ms)[0m   [0;1mCOMMIT[0m
+Rendering template within layouts/application
+Rendering users/show
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (0.7ms)[0m   [0mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (3.4ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (2.0ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (1.4ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (1.1ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (0.9ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (0.8ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (0.8ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (1.8ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;36;1mSQL (1.1ms)[0m   [0;1mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'pending'))) [0m
+  [4;35;1mChat Columns (5.2ms)[0m   [0mSHOW FIELDS FROM `chats`[0m
+  [0;34;1m[slave1] [0m  [4;36;1mChat Load (1.1ms)[0m   [0;1mSELECT * FROM `chats` WHERE (`chats`.user_id = 1) [0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (1.2ms)[0m   [0mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'accepted'))) [0m
+Completed in 886ms (View: 243, DB: 21) | 200 OK [http://localhost/account]
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2010-05-09 12:41:19) [GET]
+  Parameters: {"controller"=>"users", "action"=>"show"}
+  [4;36;1mUser Columns (4.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (3.6ms)[0m   [0mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (1.3ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (2.6ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`persistence_token` = '997700eb813a4dbd217e8ebf94b916db3fc0ac45fcc5c54873cd3b049a49aef1c14d3fa38a75f6ad0f979004f7ea4e4f0468fa841ca0b7f007cdc2f497dee643') LIMIT 1[0m
+  [4;36;1mSQL (1.5ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Update (1.3ms)[0m   [0mUPDATE `users` SET `last_request_at` = '2010-05-09 16:41:20', `perishable_token` = 'dyqhsURWQEeOp11ZRTko', `updated_at` = '2010-05-09 16:41:20' WHERE `id` = 1[0m
+  [4;36;1mSQL (28.8ms)[0m   [0;1mCOMMIT[0m
+Rendering template within layouts/application
+Rendering users/show
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (3.7ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;36;1mSQL (0.8ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (0.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (1.1ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (1.2ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (1.5ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (0.9ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (1.3ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (6.2ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (1.1ms)[0m   [0;1mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'pending'))) [0m
+  [4;35;1mChat Columns (8.1ms)[0m   [0mSHOW FIELDS FROM `chats`[0m
+  [0;34;1m[slave2] [0m  [4;36;1mChat Load (0.8ms)[0m   [0;1mSELECT * FROM `chats` WHERE (`chats`.user_id = 1) [0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (1.1ms)[0m   [0mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'accepted'))) [0m
+Completed in 514ms (View: 267, DB: 46) | 200 OK [http://localhost/account]
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#index (for 127.0.0.1 at 2010-05-09 12:41:24) [GET]
+  Parameters: {"controller"=>"users", "action"=>"index"}
+  [4;36;1mUser Columns (2.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (4.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (1.7ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (2.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`persistence_token` = '997700eb813a4dbd217e8ebf94b916db3fc0ac45fcc5c54873cd3b049a49aef1c14d3fa38a75f6ad0f979004f7ea4e4f0468fa841ca0b7f007cdc2f497dee643') LIMIT 1[0m
+  [4;36;1mSQL (2.5ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Update (9.9ms)[0m   [0mUPDATE `users` SET `last_request_at` = '2010-05-09 16:41:24', `perishable_token` = 'ksn3SS5v0-yrqoj_gigk', `updated_at` = '2010-05-09 16:41:24' WHERE `id` = 1[0m
+  [4;36;1mSQL (7.8ms)[0m   [0;1mCOMMIT[0m
+Rendering template within layouts/application
+Rendering users/index
+Completed in 284ms (View: 35, DB: 25) | 200 OK [http://localhost/users]
+  [4;35;1mSQL (3.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (1.2ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#index (for 127.0.0.1 at 2010-05-09 12:41:44) [GET]
+  Parameters: {"controller"=>"users", "action"=>"index"}
+  [4;35;1mUser Columns (5.8ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (1.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (1.5ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (1.6ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`persistence_token` = '997700eb813a4dbd217e8ebf94b916db3fc0ac45fcc5c54873cd3b049a49aef1c14d3fa38a75f6ad0f979004f7ea4e4f0468fa841ca0b7f007cdc2f497dee643') LIMIT 1[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mBEGIN[0m
+  [4;36;1mUser Update (4.9ms)[0m   [0;1mUPDATE `users` SET `last_request_at` = '2010-05-09 16:41:45', `perishable_token` = 'e3e1xhoju6Yb6iOMiY4L', `updated_at` = '2010-05-09 16:41:45' WHERE `id` = 1[0m
+  [4;35;1mSQL (7.8ms)[0m   [0mCOMMIT[0m
+Rendering template within layouts/application
+Rendering users/index
+Completed in 259ms (View: 50, DB: 24) | 200 OK [http://localhost/users]
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#index (for 127.0.0.1 at 2010-05-09 12:41:49) [GET]
+  Parameters: {"controller"=>"users", "action"=>"index"}
+  [4;36;1mUser Columns (3.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (0.9ms)[0m   [0mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (0.6ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (3.8ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`persistence_token` = '997700eb813a4dbd217e8ebf94b916db3fc0ac45fcc5c54873cd3b049a49aef1c14d3fa38a75f6ad0f979004f7ea4e4f0468fa841ca0b7f007cdc2f497dee643') LIMIT 1[0m
+  [4;36;1mSQL (1.7ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Update (5.4ms)[0m   [0mUPDATE `users` SET `last_request_at` = '2010-05-09 16:41:49', `perishable_token` = '-ncouR0_A9EC65q5jQwK', `updated_at` = '2010-05-09 16:41:49' WHERE `id` = 1[0m
+  [4;36;1mSQL (8.1ms)[0m   [0;1mCOMMIT[0m
+Rendering template within layouts/application
+Rendering users/index
+Completed in 245ms (View: 51, DB: 19) | 200 OK [http://localhost/users]
+  [4;35;1mSQL (2.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (5.5ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2010-05-09 12:41:51) [GET]
+  Parameters: {"controller"=>"users", "action"=>"show"}
+  [4;35;1mUser Columns (6.6ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (10.5ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (4.3ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (78.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`persistence_token` = '997700eb813a4dbd217e8ebf94b916db3fc0ac45fcc5c54873cd3b049a49aef1c14d3fa38a75f6ad0f979004f7ea4e4f0468fa841ca0b7f007cdc2f497dee643') LIMIT 1[0m
+  [4;35;1mSQL (1.6ms)[0m   [0mBEGIN[0m
+  [4;36;1mUser Update (6.0ms)[0m   [0;1mUPDATE `users` SET `last_request_at` = '2010-05-09 16:41:52', `perishable_token` = '_CvXXm3EVUz8ENGt3oHR', `updated_at` = '2010-05-09 16:41:52' WHERE `id` = 1[0m
+  [4;35;1mSQL (4.1ms)[0m   [0mCOMMIT[0m
+Rendering template within layouts/application
+Rendering users/show
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (15.7ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (6.2ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;36;1mSQL (1.4ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (0.4ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (1.9ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (6.4ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (7.2ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (0.7ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (0.7ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (2.8ms)[0m   [0mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'pending'))) [0m
+  [4;36;1mChat Columns (6.8ms)[0m   [0;1mSHOW FIELDS FROM `chats`[0m
+  [0;34;1m[slave2] [0m  [4;35;1mChat Load (6.2ms)[0m   [0mSELECT * FROM `chats` WHERE (`chats`.user_id = 1) [0m
+  [0;34;1m[slave1] [0m  [4;36;1mSQL (3.2ms)[0m   [0;1mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'accepted'))) [0m
+Completed in 1039ms (View: 485, DB: 33) | 200 OK [http://localhost/account]
+  [4;35;1mSQL (3.3ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (1.8ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing ChatsController#create (for 127.0.0.1 at 2010-05-09 12:41:59) [POST]
+  Parameters: {"authenticity_token"=>"fm7ifLTSRtu3swOwuhCnHfrDuoTVgWc4K26bUVEOe8w=", "chat"=>{"message"=>"hi"}, "commit"=>"Conversate", "controller"=>"chats", "action"=>"create", "user_id"=>"1"}
+  [4;35;1mUser Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (0.7ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (0.6ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (1.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`persistence_token` = '997700eb813a4dbd217e8ebf94b916db3fc0ac45fcc5c54873cd3b049a49aef1c14d3fa38a75f6ad0f979004f7ea4e4f0468fa841ca0b7f007cdc2f497dee643') LIMIT 1[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mBEGIN[0m
+  [4;36;1mUser Update (3.3ms)[0m   [0;1mUPDATE `users` SET `last_request_at` = '2010-05-09 16:41:59', `perishable_token` = 'vjzy_DHI9jJoo_UEsuhe', `updated_at` = '2010-05-09 16:41:59' WHERE `id` = 1[0m
+  [4;35;1mSQL (8.8ms)[0m   [0mCOMMIT[0m
+  [4;36;1mChat Columns (3.3ms)[0m   [0;1mSHOW FIELDS FROM `chats`[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mBEGIN[0m
+  [4;36;1mChat Create (0.9ms)[0m   [0;1mINSERT INTO `chats` (`message`, `user_id`, `created_at`, `updated_at`) VALUES('hi', 1, '2010-05-09 16:41:59', '2010-05-09 16:41:59')[0m
+  [4;35;1mSQL (1.5ms)[0m   [0mCOMMIT[0m
+Redirected to http://localhost:3000/account
+Completed in 325ms (DB: 28) | 302 Found [http://localhost/users/1/chats]
+  [4;36;1mSQL (0.8ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2010-05-09 12:42:00) [GET]
+  Parameters: {"controller"=>"users", "action"=>"show"}
+  [4;36;1mUser Columns (3.3ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (0.6ms)[0m   [0mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (0.9ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (1.9ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`persistence_token` = '997700eb813a4dbd217e8ebf94b916db3fc0ac45fcc5c54873cd3b049a49aef1c14d3fa38a75f6ad0f979004f7ea4e4f0468fa841ca0b7f007cdc2f497dee643') LIMIT 1[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Update (1.1ms)[0m   [0mUPDATE `users` SET `last_request_at` = '2010-05-09 16:42:00', `perishable_token` = 'QX5VhUX5VsDnIop-odmK', `updated_at` = '2010-05-09 16:42:00' WHERE `id` = 1[0m
+  [4;36;1mSQL (5.5ms)[0m   [0;1mCOMMIT[0m
+Rendering template within layouts/application
+Rendering users/show
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (0.6ms)[0m   [0mSET NAMES 'utf8'[0m
+  [0;34;1m[slave1] [0m  [4;36;1mSQL (0.8ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (0.9ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (1.0ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (1.0ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (4.2ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (0.8ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (1.1ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (0.8ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (1.0ms)[0m   [0;1mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'pending'))) [0m
+  [4;35;1mChat Columns (4.2ms)[0m   [0mSHOW FIELDS FROM `chats`[0m
+  [0;34;1m[slave1] [0m  [4;36;1mChat Load (1.0ms)[0m   [0;1mSELECT * FROM `chats` WHERE (`chats`.user_id = 1) [0m
+  [0;34;1m[slave1] [0m  [4;35;1mComment Load (1.0ms)[0m   [0mSELECT * FROM `comments` WHERE (`comments`.chat_id = 1) [0m
+  [4;36;1mComment Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `comments`[0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (1.2ms)[0m   [0mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'accepted'))) [0m
+Completed in 383ms (View: 218, DB: 18) | 200 OK [http://localhost/account]
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (2.4ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing CommentsController#create (for 127.0.0.1 at 2010-05-09 12:42:05) [POST]
+  Parameters: {"authenticity_token"=>"fm7ifLTSRtu3swOwuhCnHfrDuoTVgWc4K26bUVEOe8w=", "comment"=>{"message"=>"yo"}, "commit"=>"Commentate", "controller"=>"comments", "action"=>"create", "chat_id"=>"1"}
+  [4;36;1mUser Columns (3.6ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (1.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [0;34;1m[slave1] [0m  [4;36;1mSQL (0.7ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (1.5ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`persistence_token` = '997700eb813a4dbd217e8ebf94b916db3fc0ac45fcc5c54873cd3b049a49aef1c14d3fa38a75f6ad0f979004f7ea4e4f0468fa841ca0b7f007cdc2f497dee643') LIMIT 1[0m
+  [4;36;1mSQL (1.9ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Update (1.0ms)[0m   [0mUPDATE `users` SET `last_request_at` = '2010-05-09 16:42:05', `perishable_token` = 'ovLwseTF661NghsFLwNM', `updated_at` = '2010-05-09 16:42:05' WHERE `id` = 1[0m
+  [4;36;1mSQL (7.9ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mChat Columns (2.5ms)[0m   [0mSHOW FIELDS FROM `chats`[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (0.6ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (0.7ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;36;1mChat Load (0.9ms)[0m   [0;1mSELECT * FROM `chats` WHERE (`chats`.`id` = 1) [0m
+  [4;35;1mComment Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mComment Create (1.1ms)[0m   [0mINSERT INTO `comments` (`message`, `user_id`, `chat_id`, `created_at`, `updated_at`) VALUES('yo', 1, 1, '2010-05-09 16:42:05', '2010-05-09 16:42:05')[0m
+  [4;36;1mSQL (1.4ms)[0m   [0;1mCOMMIT[0m
+Redirected to http://localhost:3000/account
+Completed in 418ms (DB: 26) | 302 Found [http://localhost/chats/1/comments]
+  [4;35;1mSQL (0.9ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (2.3ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2010-05-09 12:42:05) [GET]
+  Parameters: {"controller"=>"users", "action"=>"show"}
+  [4;35;1mUser Columns (3.8ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (0.6ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (0.8ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (1.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`persistence_token` = '997700eb813a4dbd217e8ebf94b916db3fc0ac45fcc5c54873cd3b049a49aef1c14d3fa38a75f6ad0f979004f7ea4e4f0468fa841ca0b7f007cdc2f497dee643') LIMIT 1[0m
+  [4;35;1mSQL (1.3ms)[0m   [0mBEGIN[0m
+  [4;36;1mUser Update (1.2ms)[0m   [0;1mUPDATE `users` SET `last_request_at` = '2010-05-09 16:42:05', `perishable_token` = 'i2z01CmAm96C1Ptw678n', `updated_at` = '2010-05-09 16:42:05' WHERE `id` = 1[0m
+  [4;35;1mSQL (1.8ms)[0m   [0mCOMMIT[0m
+Rendering template within layouts/application
+Rendering users/show
+  [0;34;1m[slave1] [0m  [4;36;1mSQL (1.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (0.7ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (1.1ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (2.7ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (1.0ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (3.0ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (0.7ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (0.9ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (0.8ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (1.0ms)[0m   [0mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'pending'))) [0m
+  [4;36;1mChat Columns (5.3ms)[0m   [0;1mSHOW FIELDS FROM `chats`[0m
+  [0;34;1m[slave2] [0m  [4;35;1mChat Load (0.9ms)[0m   [0mSELECT * FROM `chats` WHERE (`chats`.user_id = 1) [0m
+  [0;34;1m[slave2] [0m  [4;36;1mComment Load (2.6ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.chat_id = 1) [0m
+  [4;35;1mComment Columns (2.6ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (1.9ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (1.5ms)[0m   [0mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'accepted'))) [0m
+Completed in 400ms (View: 250, DB: 19) | 200 OK [http://localhost/account]
+  [4;36;1mSQL (2.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UserSessionsController#destroy (for 127.0.0.1 at 2010-05-09 12:42:13) [DELETE]
+  Parameters: {"_method"=>"delete", "authenticity_token"=>"fm7ifLTSRtu3swOwuhCnHfrDuoTVgWc4K26bUVEOe8w=", "controller"=>"user_sessions", "action"=>"destroy"}
+  [4;36;1mUser Columns (4.3ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (1.8ms)[0m   [0mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (1.3ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (1.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`persistence_token` = '997700eb813a4dbd217e8ebf94b916db3fc0ac45fcc5c54873cd3b049a49aef1c14d3fa38a75f6ad0f979004f7ea4e4f0468fa841ca0b7f007cdc2f497dee643') LIMIT 1[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Update (2.8ms)[0m   [0mUPDATE `users` SET `last_request_at` = '2010-05-09 16:42:14', `perishable_token` = 'ktV4QehHu3V73j5hII9j', `updated_at` = '2010-05-09 16:42:14' WHERE `id` = 1[0m
+  [4;36;1mSQL (3.2ms)[0m   [0;1mCOMMIT[0m
+Redirected to http://localhost:3000/user_session/new
+Completed in 192ms (DB: 14) | 302 Found [http://localhost/user_session]
+  [4;35;1mSQL (1.0ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UserSessionsController#new (for 127.0.0.1 at 2010-05-09 12:42:14) [GET]
+  Parameters: {"controller"=>"user_sessions", "action"=>"new"}
+  [4;35;1mUser Columns (3.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+Rendering template within layouts/application
+Rendering user_sessions/new
+Completed in 209ms (View: 55, DB: 5) | 200 OK [http://localhost/user_session/new]
+  [4;36;1mSQL (1.7ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (2.0ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UserSessionsController#create (for 127.0.0.1 at 2010-05-09 12:42:20) [POST]
+  Parameters: {"authenticity_token"=>"fm7ifLTSRtu3swOwuhCnHfrDuoTVgWc4K26bUVEOe8w=", "user_session"=>{"login"=>"blatyo", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Login", "controller"=>"user_sessions", "action"=>"create"}
+  [4;36;1mUser Columns (4.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (0.6ms)[0m   [0mSET NAMES 'utf8'[0m
+  [0;34;1m[slave1] [0m  [4;36;1mSQL (1.9ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (2.2ms)[0m   [0mSELECT * FROM `users` WHERE (LOWER(`users`.login) = 'blatyo') LIMIT 1[0m
+  [4;36;1mSQL (5.5ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Update (1.1ms)[0m   [0mUPDATE `users` SET `login_count` = 2, `last_login_at` = '2010-05-09 16:10:23', `current_login_at` = '2010-05-09 16:42:20', `last_login_ip` = '127.0.0.1', `last_request_at` = '2010-05-09 16:42:20', `perishable_token` = '1wGV8H5zzLwFvpf3gAqf', `updated_at` = '2010-05-09 16:42:20' WHERE `id` = 1[0m
+  [4;36;1mSQL (5.2ms)[0m   [0;1mCOMMIT[0m
+Redirected to http://localhost:3000/account
+Completed in 212ms (DB: 20) | 302 Found [http://localhost/user_session]
+  [4;35;1mSQL (0.6ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2010-05-09 12:42:20) [GET]
+  Parameters: {"controller"=>"users", "action"=>"show"}
+  [4;35;1mUser Columns (15.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave1] [0m  [4;36;1mSQL (0.6ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (0.6ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (1.1ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = '1') LIMIT 1[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mBEGIN[0m
+  [4;36;1mUser Update (3.1ms)[0m   [0;1mUPDATE `users` SET `last_request_at` = '2010-05-09 16:42:20', `perishable_token` = 'cHpTf-kwB8Cc9GUe_xaS', `updated_at` = '2010-05-09 16:42:20' WHERE `id` = 1[0m
+  [4;35;1mSQL (1.7ms)[0m   [0mCOMMIT[0m
+Rendering template within layouts/application
+Rendering users/show
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (2.3ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (0.7ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (1.4ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (1.5ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (3.6ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (0.9ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (1.3ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (0.8ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (0.8ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (1.0ms)[0m   [0mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'pending'))) [0m
+  [4;36;1mChat Columns (2.8ms)[0m   [0;1mSHOW FIELDS FROM `chats`[0m
+  [0;34;1m[slave1] [0m  [4;35;1mChat Load (1.5ms)[0m   [0mSELECT * FROM `chats` WHERE (`chats`.user_id = 1) [0m
+  [0;34;1m[slave2] [0m  [4;36;1mComment Load (2.9ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.chat_id = 1) [0m
+  [4;35;1mComment Columns (2.2ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (1.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (1.2ms)[0m   [0mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'accepted'))) [0m
+Completed in 391ms (View: 268, DB: 27) | 200 OK [http://localhost/account]
+  [4;36;1mSQL (2.0ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.7ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#index (for 127.0.0.1 at 2010-05-09 12:43:18) [GET]
+  Parameters: {"controller"=>"users", "action"=>"index"}
+  [4;36;1mUser Columns (3.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (2.5ms)[0m   [0mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (2.7ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (3.8ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = '1') LIMIT 1[0m
+  [4;36;1mSQL (2.5ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Update (3.0ms)[0m   [0mUPDATE `users` SET `last_request_at` = '2010-05-09 16:43:18', `perishable_token` = 'KkhLEtwjIOw_OZRaDuMO', `updated_at` = '2010-05-09 16:43:18' WHERE `id` = 1[0m
+  [4;36;1mSQL (17.4ms)[0m   [0;1mCOMMIT[0m
+Rendering template within layouts/application
+Rendering users/index
+Completed in 247ms (View: 22, DB: 30) | 200 OK [http://localhost/users]
+  [4;35;1mSQL (0.4ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#index (for 127.0.0.1 at 2010-05-09 12:43:23) [GET]
+  Parameters: {"query"=>"b", "controller"=>"users", "action"=>"index"}
+  [4;35;1mUser Columns (4.9ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (1.6ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (1.5ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (1.9ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = '1') LIMIT 1[0m
+  [4;35;1mSQL (3.0ms)[0m   [0mBEGIN[0m
+  [4;36;1mUser Update (3.0ms)[0m   [0;1mUPDATE `users` SET `last_request_at` = '2010-05-09 16:43:23', `perishable_token` = 'BlZvFexfw3rWo0m8Pj0L', `updated_at` = '2010-05-09 16:43:23' WHERE `id` = 1[0m
+  [4;35;1mSQL (6.7ms)[0m   [0mCOMMIT[0m
+  [0;34;1m[slave1] [0m  [4;36;1mSQL (0.6ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (0.6ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (1.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (login like '%b%') [0m
+Rendering template within layouts/application
+Rendering users/index
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (1.1ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (1.9ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (1.0ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (0.8ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (0.8ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (0.8ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (0.8ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+Completed in 315ms (View: 73, DB: 18) | 200 OK [http://localhost/users?query=b]
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#show (for 127.0.0.1 at 2010-05-09 12:43:26) [GET]
+  Parameters: {"controller"=>"users", "action"=>"show", "id"=>"1"}
+  [4;36;1mUser Columns (4.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (1.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [0;34;1m[slave2] [0m  [4;36;1mSQL (1.3ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (2.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = '1') LIMIT 1[0m
+  [4;36;1mSQL (2.6ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Update (8.0ms)[0m   [0mUPDATE `users` SET `last_request_at` = '2010-05-09 16:43:26', `perishable_token` = 'eaLBte-Aiuo61rJHPTEd', `updated_at` = '2010-05-09 16:43:26' WHERE `id` = 1[0m
+  [4;36;1mSQL (8.3ms)[0m   [0;1mCOMMIT[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (3.6ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+Rendering template within layouts/application
+Rendering users/show
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (1.1ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (1.5ms)[0m   [0mSET NAMES 'utf8'[0m
+  [0;34;1m[slave1] [0m  [4;36;1mSQL (1.7ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (0.9ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (1.3ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;35;1mUser Load (0.8ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'accepted'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (0.8ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mUser Load (1.0ms)[0m   [0mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'requested'))) LIMIT 1[0m
+  [0;34;1m[slave1] [0m  [4;36;1mUser Load (0.8ms)[0m   [0;1mSELECT `users`.id FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE (`users`.`id` = 1) AND ((`friendships`.user_id = 1) AND ((status = 'pending'))) LIMIT 1[0m
+  [0;34;1m[slave2] [0m  [4;35;1mSQL (1.1ms)[0m   [0mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'pending'))) [0m
+  [4;36;1mChat Columns (4.8ms)[0m   [0;1mSHOW FIELDS FROM `chats`[0m
+  [0;34;1m[slave1] [0m  [4;35;1mChat Load (1.2ms)[0m   [0mSELECT * FROM `chats` WHERE (`chats`.user_id = 1) [0m
+  [0;34;1m[slave1] [0m  [4;36;1mComment Load (0.9ms)[0m   [0;1mSELECT * FROM `comments` WHERE (`comments`.chat_id = 1) [0m
+  [4;35;1mComment Columns (6.6ms)[0m   [0mSHOW FIELDS FROM `comments`[0m
+  [0;34;1m[slave2] [0m  [4;36;1mUser Load (0.9ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [0;34;1m[slave1] [0m  [4;35;1mSQL (3.5ms)[0m   [0mSELECT count(*) AS count_all FROM `users` INNER JOIN `friendships` ON `users`.id = `friendships`.friend_id WHERE ((`friendships`.user_id = 1) AND ((status = 'accepted'))) [0m
+Completed in 501ms (View: 271, DB: 35) | 200 OK [http://localhost/users/1]

@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  db_magic :slaves => [:slave1, :slave2]
   acts_as_authentic
   has_many :friends, :through => :friendships, :conditions => "status = 'accepted'"
   has_many :requested_friends, :through => :friendships, :source => :friend, :conditions => "status = 'requested'"
