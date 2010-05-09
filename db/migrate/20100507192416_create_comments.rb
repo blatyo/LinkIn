@@ -1,4 +1,6 @@
 class CreateComments < ActiveRecord::Migration
+  db_magic :connections => [:shard1, :shard2]
+
   def self.up
     create_table :comments do |t|
       t.text :message

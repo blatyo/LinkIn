@@ -42,3 +42,14 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 end
+
+USER_SHARDING_RANGES = {
+  1..200    => :shard1,
+  :default  => :shard2
+}
+
+DbCharmer::Sharding.register_connection(
+  :name => :users,
+  :method => :range,
+  :ranges => USER_SHARDING_RANGES
+)

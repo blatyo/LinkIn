@@ -1,4 +1,8 @@
 class Friendship < ActiveRecord::Base
+  db_magic :sharded => {
+    :key => :user_id,
+    :sharded_connection => :users
+  }
   belongs_to :user
   belongs_to :friend, :class_name => 'User', :foreign_key =>'friend_id'
 
