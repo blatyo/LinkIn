@@ -1,0 +1,73 @@
+body {
+    background-color: #C4CAF5;
+}
+
+#container {
+    margin: 0 auto;
+    width: 800px;
+    padding: 30px;
+    background-color: #fff;
+}
+
+#nav ul {
+    list-style: none;
+    height: 30px;
+    width: 800px;
+    margin: 0;
+    padding: 0;
+    background-color: #C4CAF5;
+    color: #000;
+    
+}
+
+#nav li {
+    float: left;
+    padding: 5px 10px;
+}
+
+#nav a {
+    color: #000;
+    text-decoration: none;
+}
+
+#nav a:hover {
+    color: #000;
+    text-decoration: none;
+}
+
+#nav a:visited {
+    color: #000;
+    text-decoration: none;
+}
+
+#main_content {
+    float: left;
+    width: 60%;
+}
+
+#friend_requests {
+    border: #C4CAF5 thin dotted;
+    margin: 3px;
+    padding: 3px;
+}
+
+.comment, .chat, div#new_chat, .chat > .message {
+    padding: 3px;
+    border-bottom: thin dashed;
+}
+
+.comments {
+    margin-left: 20px;
+}
+
+#secondary_content {
+    float: right;
+    margin-left: 10px;
+    border: #C4CAF5 thin solid;
+    padding: 10px;
+    width: 150px;
+}
+
+#footer {
+    clear: both;
+}

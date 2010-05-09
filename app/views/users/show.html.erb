@@ -1,69 +1,79 @@
 <div id="main_content">
   <div id="about">
-    <%=h @user.login %>
-    <p>
-        <b>Last login at:</b>
-        <%=h @user.last_login_at %>
-    </p>
-    <%= link_to 'Edit', edit_account_path if @user == current_user %>
-    <%= add_friend_link(@user, current_user) %>
-    <%= remove_friend_link(@user, current_user) %>
-    <%= confirm_friendship_link(@user, current_user) %>
-    <%= reject_friendship_link(@user, current_user) %>
-    <%= cancel_friendship_link(@user, current_user) %>
-  </div>
-  <div id="friend_requests">
-    <% current_user.pending_friends.each do |friend| %>
-      <div class="friend_request">
-        <%= h friend.login %>
-        <%= confirm_friendship_link(friend, current_user) %>
-        <%= reject_friendship_link(friend, current_user) %>
-      </div>
-    <% end if @user == current_user %>
-  </div>
-  <div id="chats">
-    <% if @user == current_user %>
-      <div id="new_chat">
-        <% form_for([current_user, Chat.new]) do |f| %>
-          <%= f.text_field :message %>
-          <%= f.submit "Conversate" %>
-        <% end %>
-      </div>
+    <h2><%=h @user.login %></h2>
+    <p><%=h @user.email %>&nbsp;<%= link_to 'Edit', edit_account_path if @user == current_user %></p>
+    <% if @user.last_login_at %>
+      <p id="last_login">
+        Last login about <%=time_ago_in_words @user.last_login_at %> ago.
+      </p>
     <% end %>
-    <% @user.chats.each do |chat| %>
-      <div class="chat">
-        <div class="message">
-          <%= h chat.message %>
+    <p>
+      <%= add_friend_link(@user, current_user) %>
+      <%= remove_friend_link(@user, current_user) %>
+      <%= confirm_friendship_link(@user, current_user) %>
+      <%= reject_friendship_link(@user, current_user) %>
+      <%= cancel_friendship_link(@user, current_user) %>
+    </p>
+  </div>
+  <% unless current_user.pending_friends.empty? %>
+    <div id="friend_requests">
+      <% current_user.pending_friends.each do |friend| %>
+        <div class="friend_request">
+          <%= h friend.login %>
+          <%= confirm_friendship_link(friend, current_user) %>
+          <%= reject_friendship_link(friend, current_user) %>
         </div>
-        <div class="comments">
-          <% chat.comments.each do |comment| %>
-            <div class="comment">
-              <div class="message">
-                <%= h comment.message %>
-              </div>
-              <div class="author">
-                <%= h comment.user.login %>
-              </div>
-            </div>
+      <% end if @user == current_user %>
+    </div>
+  <% end %>
+  <% if @user == current_user || @user.friend?(current_user) %>
+    <div id="chats">
+      <% if @user == current_user %>
+        <div id="new_chat">
+          <% form_for([current_user, Chat.new]) do |f| %>
+            <%= f.text_field :message %>
+            <%= f.submit "Conversate" %>
           <% end %>
-          <div class="new_comment">
-            <% form_for([chat, Comment.new]) do |f| %>
-              <%= f.text_field :message %>
-              <%= f.submit "Commentate" %>  
+        </div>
+      <% end %>
+      <% @user.chats.each do |chat| %>
+        <div class="chat">
+          <div class="message">
+            <%= h chat.message %>
+          </div>
+          <div class="comments">
+            <% chat.comments.each do |comment| %>
+              <div class="comment">
+                <div class="message">
+                  <%= h comment.message %>
+                </div>
+                <div class="author">
+                  by <%= link_to comment.user.login, comment.user %>
+                </div>
+              </div>
             <% end %>
+            <div class="new_comment">
+              <% form_for([chat, Comment.new]) do |f| %>
+                <%= f.text_field :message %>
+                <%= f.submit "Commentate" %>
+              <% end %>
+            </div>
           </div>
         </div>
-      </div>
-    <% end %>
-  </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
-<div id="secondary_content">
-  <div id="friends">
-    <% @user.friends.each do |friend| %>
-      <div class="friend">
-        <%= h friend.login %>
-        <%= remove_friend_link(friend, current_user) %>
-      </div>
-    <% end %>
+<% unless @user.friends.empty? %>
+  <div id="secondary_content">
+    <div id="friends">
+      <h3>Friends</h3>
+      <% @user.friends.each do |friend| %>
+        <div class="friend">
+          <%= link_to friend.login, friend %>
+          <%= remove_friend_link(friend, current_user) %>
+        </div>
+      <% end %>
+    </div>
   </div>
-</div>
+<% end %>

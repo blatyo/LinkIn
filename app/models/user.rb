@@ -21,4 +21,9 @@ class User < ActiveRecord::Base
   def no_relation?(user)
     !friend?(user) && !requested_friend?(user) && !pending_friend?(user)
   end
+
+  def self.search(query)
+    return nil unless query
+    User.find(:all, :conditions => ["login like ?", "%#{query}%"])
+  end
 end

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :require_no_user, :only => [:new, :create]
-  before_filter :require_user, :only => [:edit, :update, :show]
+  before_filter :require_user, :only => [:edit, :update, :show, :index]
 
   def new
     @user = User.new
@@ -22,6 +22,11 @@ class UsersController < ApplicationController
     else
       current_user
     end
+  end
+
+  def index
+    @query = params[:query]
+    @users = User.search(@query)
   end
 
   def edit
